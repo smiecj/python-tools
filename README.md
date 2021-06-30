@@ -1,2 +1,11 @@
 # python-tools
-Some python tools, used in centos system.
+Some python environmenet init tools, used in centos system.
+
+
+## contents
+### python2
+install_pip: python2 version install pip
+
+## use
+### make install_pip
+install pip for python2
