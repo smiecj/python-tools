@@ -1,0 +1,19 @@
+#!/bin/bash
+
+home_path=/home/coding/python-tools/python2
+pushd $home_path
+
+miniconda_install_path="/usr/local/moniconda2"
+conda_script="Miniconda2-4.7.12.1-Linux-x86_64.sh"
+if [ $# -ge 1 ] && [ -n $1 ]; then
+    miniconda_install_path=$1
+fi
+
+# if [ -e $conda_script ]; then
+#     wget "https://repo.anaconda.com/miniconda/$conda_script"
+#     # 删除指定行
+# fi
+
+bash $conda_script $miniconda_install_paths
+
+popd
