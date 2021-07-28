@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
-## todo: is this jq statement normal?
-home_path=`echo $(realpath $0) | jq -r 'split("/") | .[:length-1] | join("/")'`
+script_full_path=$(realpath $0)
+home_path=`echo "{\"path\": \"$script_full_path\"}" | jq -c -r '.path | split("/") | .[:length-1] | join("/")'`
 pushd $home_path
 
 . ../env.sh
@@ -23,14 +23,13 @@ else
     exit
 fi
 
-install_path="packages"
-if [ -d "$install_path" ]; then
-    rm -rf $install_path
+if [ -d "$pkg_download_path" ]; then
+    rm -rf $pkg_download_path
 fi
-mkdir $install_path
+mkdir $pkg_download_path
 
 ## Download to install packages
-pushd $install_path
+pushd $pkg_download_path
 wget -O $setuptools_file -q "$setuptools_zip_url"
 wget -O $ez_setup_file -q "$ez_setup_targz_url"
 wget -O $pip_file -q "$pip_targz_url"
