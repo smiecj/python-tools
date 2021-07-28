@@ -1,23 +1,25 @@
 #!/bin/bash
 set -euxo pipefail
 
-home_path=/home/coding/python-tools/python2
+## todo: is this jq statement normal?
+home_path=`echo $(realpath $0) | jq -r 'split("/") | .[:length-1] | join("/")'`
 pushd $home_path
 
 . ../env.sh
+. ../log.sh
 
 ## check whether python is installed
 ### ref: https://stackoverflow.com/a/28256343
 python_check_ret=`python -V 2>&1`
-echo "lifeng: check ret: $python_check_ret"
+log_info "check version ret: $python_check_ret"
 if [[ $python_check_ret =~ Python[[:space:]]2.* ]]; then
     python_version=`echo $python_check_ret | sed 's/.* //g'`
-    echo "Python version check success: $python_version"
+    log_info "Python version check success: $python_version"
 elif [[ "$python_check_ret" =~ Python[[:space:]]3.* ]]; then
-    echo "Python version check failed: maybe install 3 version, need 2"
+    log_info "Python version check failed: maybe install 3 version, need 2"
     exit
 else
-    echo "Python version check failed: maybe not installed"
+    log_info "Python version check failed: maybe not installed"
     exit
 fi
 
