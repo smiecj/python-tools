@@ -3,3 +3,6 @@ install_pip:
 
 install_jupyter:
 	sh jupyter/install_juputer.sh
+
+install_conda:
+	sh python2/install_conda.sh
