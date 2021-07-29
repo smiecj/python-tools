@@ -10,3 +10,9 @@ install_conda:
 clean:
 	find -name 'logs' | grep -v git | xargs rm -rf
 	find -name 'packages' | xargs rm -rf
+
+run_jupyter:
+	sh jupyter/start_jupyterhub.sh
+
+kill_jupyter:
+	sh jupyter/stop_jupyterhub.sh

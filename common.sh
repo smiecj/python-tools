@@ -4,7 +4,7 @@ FALSE="False"
 ## check conda is installed
 get_conda_is_installed() {
     local conda_env_get_ret=`cat /etc/profile | grep $conda_env_key_home`
-    local conda_exec_ret=`conda env list`
+    conda env list
     local conda_exec_ret_code=$?
     if [ -z "$conda_env_get_ret" ] || [ 0 -ne $conda_exec_ret_code ]; then
         echo "$FALSE"
