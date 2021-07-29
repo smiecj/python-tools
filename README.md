@@ -12,3 +12,6 @@ install pip for python2
 
 ### make install_conda
 install miniconda2 for python2, then we can manage our python environment more convinent
+
+### clean
+clean all temp folder, including logs

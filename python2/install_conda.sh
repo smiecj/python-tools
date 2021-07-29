@@ -7,14 +7,15 @@ pushd $home_path
 
 . ../env.sh
 . ../log.sh
+. ../common.sh
 
-conda_env_get_ret=`cat /etc/profile | grep $conda_env_key_home`
-conda_exec_ret=`conda env list`
-conda_exec_ret_code=$?
-if [ -z "$conda_env_get_ret" ] || [ 0 -ne $conda_exec_ret_code ]; then
+conda_is_installed=$(get_conda_is_installed)
+if [ "$FALSE" == "$conda_is_installed" ]; then
     ## install conda
     rm -rf $miniconda_install_path
-    ### todo: remove conda environment in the /etc/profile and last enters
+    ### remote old conda environment
+    sed -i 's/.*CONDA.*//g' /etc/profile
+    sed -i 's/.*conda.*//g' /etc/profile
     pushd $pkg_download_path
     conda_install_script=`echo "$conda_pkg_download_url" | sed 's/.*\///g'`
     wget -N -O $conda_install_script $conda_pkg_download_url
@@ -28,6 +29,8 @@ if [ -z "$conda_env_get_ret" ] || [ 0 -ne $conda_exec_ret_code ]; then
     conda create -y --name $conda_env_name_python3 python=$python3_version
     conda config --set auto_activate_base false
     popd
+else
+    log_info "Conda has installed"
 fi
 
 popd

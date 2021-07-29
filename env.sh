@@ -15,3 +15,13 @@ conda_env_key_home="CONDA_HOME"
 conda_env_name_python3=py3
 python3_version=3.8
 
+# jupyter config
+
+jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive")
+npm_conpoment_arr=("configurable-http-proxy")
+
+## jupyterhub config
+jupyter_conf_home=/home/modules/jupyter
+
+jupyterhub_conf_bind_ip=0.0.0.0
+jupyterhub_conf_bind_port=8101
