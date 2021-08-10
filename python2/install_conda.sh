@@ -22,7 +22,7 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     bash $conda_install_script -b -p $miniconda_install_path
 
     ## add conda to environment
-    echo -ne "\nexport $conda_env_key_home=$miniconda_install_path\nexport PATH=\$PATH:$conda_env_key_home/bin\n" >> /etc/profile
+    echo -ne "\nexport $conda_env_key_home=$miniconda_install_path\nexport PATH=\$PATH:\$$conda_env_key_home/bin\n" >> /etc/profile
     source /etc/profile
 
     ## conda install env
@@ -34,3 +34,4 @@ else
 fi
 
 popd
+source /etc/profile
