@@ -3,3 +3,5 @@ packages
 python2/Miniconda*
 
 logs
+
+/jupyterhub*

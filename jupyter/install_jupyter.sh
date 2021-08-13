@@ -41,22 +41,34 @@ for conpoment in ${jupyter_conpoment_arr[@]}
 do
     log_info "Install jupyter conpoment: install $conpoment begin"
     pip uninstall -y $conpoment
-    pip install $conpoment
+    if [ -n "$pip_proxy" ]; then
+        pip install $conpoment -i $pip_proxy
+    else
+        pip install $conpoment
+    fi
     log_info "Install jupyter conpoment: install $conpoment finish"
 done
 conda deactivate
 
 ## config jupyterhub
-mkdir -p $jupyter_conf_home/config
+mkdir -p $jupyter_home/config
 
-pushd $jupyter_conf_home/config
+pushd $jupyter_home/config
 source $miniconda_install_path/bin/activate $conda_env_name_python3
-rm jupyterhub_config.py
+rm -f jupyterhub_config.py
 jupyterhub --generate-config
 sed -i "s/.*c\.JupyterHub\.ip.*/c.JupyterHub.ip = '$jupyterhub_conf_bind_ip'/g" jupyterhub_config.py
 sed -i "s/.*c\.JupyterHub\.port.*/c.JupyterHub.port = $jupyterhub_conf_bind_port/g" jupyterhub_config.py
 conda deactivate
 popd
+
+
+## todo: add at least two local account
+for i in "${!juputer_local_username_arr[@]}"
+do
+    id -u ${juputer_local_username_arr[$i]} &>/dev/null || useradd ${juputer_local_username_arr[$i]}
+    echo "${juputer_local_username_arr[$i]}:${juputer_local_password_arr[$i]}" | chpasswd
+done
 
 ## start jupyterhub
 ### start_jupyterhub.sh

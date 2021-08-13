@@ -8,6 +8,10 @@ pip_file=pip.tar.gz
 
 pkg_download_path="packages"
 
+## pip proxy
+pip_proxy=
+
+## conda
 conda_pkg_download_url=https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh
 miniconda_install_path="/usr/local/miniconda2"
 conda_env_key_home="CONDA_HOME"
@@ -20,8 +24,11 @@ python3_version=3.8
 jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive")
 npm_conpoment_arr=("configurable-http-proxy")
 
+juputer_local_username_arr=("jupyter" "jupyter_test")
+jupyter_local_password_arr=("jupyter@Qwer" "jupyter@test")
+
 ## jupyterhub config
-jupyter_conf_home=/home/modules/jupyter
+jupyter_home=/home/modules/jupyter
 
 jupyterhub_conf_bind_ip=0.0.0.0
 jupyterhub_conf_bind_port=8101
