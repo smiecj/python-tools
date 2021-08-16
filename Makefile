@@ -25,3 +25,18 @@ start_jupyter:
 
 stop_jupyter:
 	service jupyter stop
+
+install_airflow:
+	sh airflow/install_airflow.sh
+
+run_airflow:
+	sh airflow/start_airflow.sh
+
+kill_airflow:
+	sh airflow/stop_airflow.sh
+
+start_airflow:
+	service airflow start
+
+stop_airflow:
+	service airflow stop

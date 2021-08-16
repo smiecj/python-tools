@@ -15,9 +15,8 @@ get_conda_is_installed() {
 
 ## check npm is installed
 get_npm_is_installed() {
-    local npm_exec_ret=`npm version`
-    local npm_exec_ret_code=$?
-    if [ 0 -ne $npm_exec_ret_code ]; then
+    local jupyterhub_package_num=`[[ -n "$NODE_HOME" ]] && find $NODE_HOME/bin -name npm 2>/dev/null`
+    if [ $jupyterhub_package_num -eq 0 ]; then
         echo "$FALSE"
         return
     fi
@@ -32,6 +31,16 @@ get_npm_is_installed() {
 get_jupyter_is_installed() {
     local conda_env_name=$1
     local jupyterhub_package_num=`ls -l $miniconda_install_path/envs/$conda_env_name/lib/python$python3_version/site-packages | grep 'jupyterhub' | wc -l`
+    if [ $jupyterhub_package_num -eq 0 ]; then
+        echo "$FALSE"
+        return
+    fi
+    echo "$TRUE"
+}
+
+get_airflow_is_installed() {
+    local conda_env_name=$1
+    local jupyterhub_package_num=`ls -l $miniconda_install_path/envs/$conda_env_name/lib/python$python3_version/site-packages | grep 'airflow' | wc -l`
     if [ $jupyterhub_package_num -eq 0 ]; then
         echo "$FALSE"
         return
