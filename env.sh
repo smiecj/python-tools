@@ -21,7 +21,8 @@ python3_version=3.8
 
 # jupyter config
 
-jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive")
+jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive" "jupyterhub-idle-culler" "spylon-kernel")
+jupyter_kernel_arr=("spylon_kernel")
 npm_conpoment_arr=("configurable-http-proxy")
 
 juputer_local_username_arr=("jupyter" "jupyter_test")
@@ -32,3 +33,9 @@ jupyter_home=/home/modules/jupyter
 
 jupyterhub_conf_bind_ip=0.0.0.0
 jupyterhub_conf_bind_port=8101
+
+jupyter_pam_file=jupyterhub_pam
+
+jupyter_spawner_timeout=3600
+jupyter_memory_limit=1G
+jupyter_cpu_limit=2

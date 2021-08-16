@@ -1,3 +1,6 @@
+update:
+	git pull origin main
+
 install_pip:
 	sh python2/install_pip.sh 
 
@@ -13,6 +16,7 @@ install_conda:
 clean:
 	find -name 'logs' | grep -v git | xargs rm -rf
 	find -name 'packages' | xargs rm -rf
+	find -maxdepth 1 -name 'jupyterhub*' | xargs rm -f
 
 run_jupyter:
 	sh jupyter/start_jupyterhub.sh
