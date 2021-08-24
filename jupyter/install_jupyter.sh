@@ -58,6 +58,12 @@ do
 done
 conda deactivate
 
+## config jupyter proxy
+proxy_token_lines=`cat /etc/profile | grep CONFIGPROXY_AUTH_TOKEN | wc -l`
+if [[ $proxy_token_lines -eq 0 ]]; then
+    echo -e "\nexport CONFIGPROXY_AUTH_TOKEN=$jupyter_proxy_token"
+fi
+
 ## config jupyterhub
 mkdir -p $jupyter_home/config
 
@@ -65,9 +71,13 @@ pushd $jupyter_home/config
 source $miniconda_install_path/bin/activate $conda_env_name_python3
 rm -f jupyterhub_config.py
 jupyterhub --generate-config
+
+### basic
 sed -i "s/.*c\.JupyterHub\.ip.*/c.JupyterHub.ip = '$jupyterhub_conf_bind_ip'/g" jupyterhub_config.py
 sed -i "s/.*c\.JupyterHub\.port.*/c.JupyterHub.port = $jupyterhub_conf_bind_port/g" jupyterhub_config.py
 echo -e "\nc.PAMAuthenticator.service = '$jupyter_pam_file'\n" >> jupyterhub_config.py
+
+### culler
 echo "import sys
 c.JupyterHub.services = [
     {
@@ -80,10 +90,25 @@ c.JupyterHub.services = [
         ],
     }
 ]" >> jupyterhub_config.py
+
+### scala
+echo "c.Spawner.environment = {
+        'SPARK_HOME': '/home/modules/spark-3.1.2'
+}" >> jupyterhub_config.py
+
+### memory and cpu limit
 echo -e "\nc.Spawner.mem_limit = \"$jupyter_memory_limit\"\nc.Spawner.cpu_limit = $jupyter_cpu_limit\n" >> jupyterhub_config.py
+
+### proxy
+echo "
+c.JupyterHub.cleanup_servers = False
+c.ConfigurableHTTPProxy.should_start = False
+c.ConfigurableHTTPProxy.auth_token = '$jupyter_proxy_token'
+c.ConfigurableHTTPProxy.api_url = '$jupyter_proxy_address'
+" >> jupyterhub_config.py
+
 conda deactivate
 popd
-
 
 ## add at least two local account
 for i in "${!juputer_local_username_arr[@]}"
@@ -94,7 +119,7 @@ do
     ### make home dir to avoid auto create home folder failed problem
     home_path=/home/${juputer_local_username_arr[$i]}
     mkdir -p $home_path
-    chown ${juputer_local_username_arr[$i]}:${juputer_local_username_arr[$i]} $home_path
+    chown -R ${juputer_local_username_arr[$i]}:${juputer_local_username_arr[$i]} $home_path
 done
 
 ## start jupyterhub

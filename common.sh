@@ -15,7 +15,7 @@ get_conda_is_installed() {
 
 ## check npm is installed
 get_npm_is_installed() {
-    local jupyterhub_package_num=`[[ -n "$NODE_HOME" ]] && find $NODE_HOME/bin -name npm 2>/dev/null`
+    local jupyterhub_package_num=`[[ -n "$NODE_HOME" ]] && find $NODE_HOME/bin -name 'npm' 2>/dev/null | wc -l`
     if [ $jupyterhub_package_num -eq 0 ]; then
         echo "$FALSE"
         return

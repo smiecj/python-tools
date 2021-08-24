@@ -28,6 +28,9 @@ npm_conpoment_arr=("configurable-http-proxy")
 juputer_local_username_arr=("jupyter" "jupyter_test")
 jupyter_local_password_arr=("jupyter@Qwer" "jupyter@test")
 
+jupyter_proxy_token=test_hub_123
+jupyter_proxy_address=http://127.0.0.1:8102
+
 ## jupyterhub config
 jupyter_home=/home/modules/jupyter
 
