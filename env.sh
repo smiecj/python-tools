@@ -21,7 +21,7 @@ python3_version=3.8
 
 # jupyter config
 
-jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive" "jupyterhub-idle-culler" "spylon-kernel")
+jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive" "jupyterhub-idle-culler" "spylon-kernel" "jupyter_contrib_nbextensions", "jupyterthemes")
 jupyter_kernel_arr=("spylon_kernel")
 npm_conpoment_arr=("configurable-http-proxy")
 

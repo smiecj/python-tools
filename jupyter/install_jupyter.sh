@@ -107,6 +107,16 @@ c.ConfigurableHTTPProxy.auth_token = '$jupyter_proxy_token'
 c.ConfigurableHTTPProxy.api_url = '$jupyter_proxy_address'
 " >> jupyterhub_config.py
 
+### install some useful extensions
+jupyter contrib nbextension install --sys-prefix
+
+#### auto complete
+jupyter nbextension enable hinterland/hinterland --sys-prefix
+#### show execute time
+jupyter nbextension enable execute_time/ExecuteTime --sys-prefix
+#### use numpy
+jupyter nbextension enable snippets/main --sys-prefix
+
 conda deactivate
 popd
 
