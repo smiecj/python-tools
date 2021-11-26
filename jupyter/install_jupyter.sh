@@ -1,5 +1,11 @@
 #!/bin/bash
 
+## check jq is install
+jq_exec_ret=`jq --help 2>/dev/null || true`
+if [ -z "$jq_exec_ret" ]; then
+    cd /usr/local/bin && wget "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && mv jq-linux64 jq && chmod +x jq
+fi
+
 script_full_path=$(realpath $0)
 home_path=`echo "{\"path\": \"$script_full_path\"}" | jq -c -r '.path | split("/") | .[:length-1] | join("/")'`
 pushd $home_path
@@ -95,6 +101,11 @@ c.JupyterHub.services = [
 echo "c.Spawner.environment = {
         'SPARK_HOME': '/home/modules/spark-3.1.2'
 }" >> jupyterhub_config.py
+
+### R
+yum -y install epel-release
+yum update
+yum -y install R
 
 ### memory and cpu limit
 echo -e "\nc.Spawner.mem_limit = \"$jupyter_memory_limit\"\nc.Spawner.cpu_limit = $jupyter_cpu_limit\n" >> jupyterhub_config.py
