@@ -1,12 +1,19 @@
 TRUE="True"
 FALSE="False"
 
+install_jq() {
+    ## check jq is install
+    jq_exec_ret=`jq --help 2>/dev/null || true`
+    if [ -z "$jq_exec_ret" ]; then
+        cd /usr/local/bin && wget "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && mv jq-linux64 jq && chmod +x jq
+    fi
+}
+
 ## check conda is installed
 get_conda_is_installed() {
     local conda_env_get_ret=`cat /etc/profile | grep $conda_env_key_home`
-    conda env list
-    local conda_exec_ret_code=$?
-    if [ -z "$conda_env_get_ret" ] || [ 0 -ne $conda_exec_ret_code ]; then
+    jq_exec_ret=`conda env list 2>/dev/null || true`
+    if [ -z "$jq_exec_ret" ]; then
         echo "$FALSE"
         return
     fi

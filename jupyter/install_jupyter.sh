@@ -1,10 +1,9 @@
 #!/bin/bash
 
+. ./common.sh
+
 ## check jq is install
-jq_exec_ret=`jq --help 2>/dev/null || true`
-if [ -z "$jq_exec_ret" ]; then
-    cd /usr/local/bin && wget "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && mv jq-linux64 jq && chmod +x jq
-fi
+install_jq
 
 script_full_path=$(realpath $0)
 home_path=`echo "{\"path\": \"$script_full_path\"}" | jq -c -r '.path | split("/") | .[:length-1] | join("/")'`
@@ -12,7 +11,6 @@ pushd $home_path
 
 . ../env.sh
 . ../log.sh
-. ../common.sh
 
 ## check conda is installed
 conda_is_installed=$(get_conda_is_installed)

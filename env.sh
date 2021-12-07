@@ -14,8 +14,11 @@ pkg_download_path="packages"
 pip_proxy=
 
 ## conda
+### x86
 conda_pkg_download_url=https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh
-miniconda_install_path="/usr/local/miniconda2"
+### arm
+#conda_pkg_download_url=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+miniconda_install_path="/usr/local/miniconda"
 conda_env_key_home="CONDA_HOME"
 
 conda_env_name_python3=py3
