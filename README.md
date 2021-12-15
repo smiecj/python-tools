@@ -5,6 +5,7 @@ Some python environmenet init tools, used in centos system.
 ## contents
 ### python2
 install_pip: python2 version install pip
+install_conda: install conda
 
 ## how to use
 ### make install_pip
