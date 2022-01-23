@@ -21,6 +21,7 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     ### remote old conda environment
     sed -i 's/.*CONDA.*//g' /etc/profile
     sed -i 's/.*conda.*//g' /etc/profile
+    mkdir -p $pkg_download_path
     pushd $pkg_download_path
     conda_install_script=`echo "$conda_pkg_download_url" | sed 's/.*\///g'`
     wget -N -O $conda_install_script $conda_pkg_download_url

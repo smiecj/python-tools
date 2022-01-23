@@ -26,7 +26,7 @@ fi
 if [ -d "$pkg_download_path" ]; then
     rm -rf $pkg_download_path
 fi
-mkdir $pkg_download_path
+mkdir -p $pkg_download_path
 
 ## Download to install packages
 pushd $pkg_download_path

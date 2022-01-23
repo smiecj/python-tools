@@ -5,7 +5,7 @@ install_jq() {
     ## check jq is install
     jq_exec_ret=`jq --help 2>/dev/null || true`
     if [ -z "$jq_exec_ret" ]; then
-        cd /usr/local/bin && wget "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && mv jq-linux64 jq && chmod +x jq
+        pushd /usr/local/bin && wget "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && mv jq-linux64 jq && chmod +x jq && popd
     fi
 }
 
