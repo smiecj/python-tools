@@ -65,7 +65,7 @@ conda deactivate
 ## config jupyter proxy
 proxy_token_lines=`cat /etc/profile | grep CONFIGPROXY_AUTH_TOKEN | wc -l`
 if [[ $proxy_token_lines -eq 0 ]]; then
-    echo -e "\nexport CONFIGPROXY_AUTH_TOKEN=$jupyter_proxy_token"
+    echo "export CONFIGPROXY_AUTH_TOKEN=$jupyter_proxy_token" >> /etc/profile
 fi
 
 ## config jupyterhub
@@ -140,6 +140,18 @@ do
     mkdir -p $home_path
     chown -R ${juputer_local_username_arr[$i]}:${juputer_local_username_arr[$i]} $home_path
 done
+
+## copy jupyter systemd and start script
+jupyter_script_path=$jupyter_home/scripts
+mkdir -p $jupyter_script_path
+cp start_jupyterhub.sh $jupyter_script_path
+cp stop_jupyterhub.sh $jupyter_script_path
+
+source /etc/profile
+cp jupyterhub_systemd.conf /etc/systemd/system/jupyter.conf
+sed -i "s/{PATH}/$PATH/g" /etc/systemd/system/jupyter.conf
+sed -i "s/{JUPUTER_HOME}/$jupyter_home/g" /etc/systemd/system/jupyter.conf
+systemctl daemon-reload
 
 ## start jupyterhub
 ### start_jupyterhub.sh
