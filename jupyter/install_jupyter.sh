@@ -102,7 +102,7 @@ echo "c.Spawner.environment = {
 
 ### R
 yum -y install epel-release
-yum update
+yum -y update
 yum -y install R
 
 ### memory and cpu limit

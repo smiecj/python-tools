@@ -11,7 +11,6 @@ install_jq() {
 
 ## check conda is installed
 get_conda_is_installed() {
-    local conda_env_get_ret=`cat /etc/profile | grep $conda_env_key_home`
     jq_exec_ret=`conda env list 2>/dev/null || true`
     if [ -z "$jq_exec_ret" ]; then
         echo "$FALSE"
