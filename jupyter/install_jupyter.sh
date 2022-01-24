@@ -149,8 +149,10 @@ cp stop_jupyterhub.sh $jupyter_script_path
 
 source /etc/profile
 cp jupyterhub_systemd.conf /etc/systemd/system/jupyter.conf
-sed -i "s/{PATH}/$PATH/g" /etc/systemd/system/jupyter.conf
-sed -i "s/{JUPUTER_HOME}/$jupyter_home/g" /etc/systemd/system/jupyter.conf
+format_path=`echo $PATH | sed 's/\//\\\\\//g'`
+sed -i "s/{PATH}/$format_path/g" /etc/systemd/system/jupyter.conf
+format_jupyter_home=`echo $jupyter_home | sed 's/\//\\\\\//g'`
+sed -i "s/{JUPUTER_HOME}/$format_jupyter_home/g" /etc/systemd/system/jupyter.conf
 systemctl daemon-reload
 
 ## start jupyterhub
