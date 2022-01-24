@@ -146,6 +146,8 @@ jupyter_script_path=$jupyter_home/scripts
 mkdir -p $jupyter_script_path
 cp start_jupyterhub.sh $jupyter_script_path
 cp stop_jupyterhub.sh $jupyter_script_path
+cp ../env.sh $jupyter_script_path
+chmod -R 755 $jupyter_script_path
 
 jupyter_service_file=/etc/systemd/system/jupyter.service
 source /etc/profile
