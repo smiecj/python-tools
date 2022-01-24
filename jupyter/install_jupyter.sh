@@ -147,12 +147,14 @@ mkdir -p $jupyter_script_path
 cp start_jupyterhub.sh $jupyter_script_path
 cp stop_jupyterhub.sh $jupyter_script_path
 
+jupyter_service_file=/etc/systemd/system/jupyter.service
 source /etc/profile
-cp jupyterhub_systemd.conf /etc/systemd/system/jupyter.conf
+cp jupyterhub_systemd.conf $jupyter_service_file
 format_path=`echo $PATH | sed 's/\//\\\\\//g'`
-sed -i "s/{PATH}/$format_path/g" /etc/systemd/system/jupyter.conf
+sed -i "s/{PATH}/$format_path/g" $jupyter_service_file
 format_jupyter_home=`echo $jupyter_home | sed 's/\//\\\\\//g'`
-sed -i "s/{JUPUTER_HOME}/$format_jupyter_home/g" /etc/systemd/system/jupyter.conf
+sed -i "s/{JUPUTER_HOME}/$format_jupyter_home/g" $jupyter_service_file
+chmod 755 $jupyter_service_file
 systemctl daemon-reload
 
 ## start jupyterhub
