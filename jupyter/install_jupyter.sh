@@ -2,11 +2,8 @@
 
 . ./common.sh
 
-## check jq is install
-install_jq
-
 script_full_path=$(realpath $0)
-home_path=`echo "{\"path\": \"$script_full_path\"}" | jq -c -r '.path | split("/") | .[:length-1] | join("/")'`
+home_path=$(dirname $script_full_path)
 pushd $home_path
 
 . ../env.sh
