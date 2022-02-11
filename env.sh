@@ -15,11 +15,11 @@ pip_proxy=
 
 ## conda
 ### x86
-conda_pkg_download_url=https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh
+conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda2-latest-Linux-x86_64.sh
 system_arch=`uname -p`
 if [ "aarch64" == "$system_arch" ]; then
     ### arm
-    conda_pkg_download_url=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+    conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-aarch64.sh
 fi
 miniconda_install_path="/usr/local/miniconda"
 conda_env_key_home="CONDA_HOME"
