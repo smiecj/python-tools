@@ -13,6 +13,12 @@ pushd $home_path
 conda_is_installed=$(get_conda_is_installed)
 if [ "$FALSE" == "$conda_is_installed" ]; then
     ## install conda
+    ### aarch 架构 需要先更新 glibc 才能成功安装 conda
+    system_arch=`uname -p`
+    if [ "aarch64" == "$system_arch" ]; then
+        sh ./upgrade_glibc.sh
+    fi
+
     rm -rf $miniconda_install_path
     ### remote old conda environment
     sed -i 's/.*CONDA.*//g' /etc/profile
