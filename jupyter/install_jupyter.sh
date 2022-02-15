@@ -74,9 +74,15 @@ rm -f jupyterhub_config.py
 jupyterhub --generate-config
 
 ### basic
+#### auth
 sed -i "s/.*c\.JupyterHub\.ip.*/c.JupyterHub.ip = '$jupyterhub_conf_bind_ip'/g" jupyterhub_config.py
 sed -i "s/.*c\.JupyterHub\.port.*/c.JupyterHub.port = $jupyterhub_conf_bind_port/g" jupyterhub_config.py
 echo -e "\nc.PAMAuthenticator.service = '$jupyter_pam_file'\n" >> jupyterhub_config.py
+jupyter_pam_path=/etc/pam.d/$jupyter_pam_file
+echo '#%PAM-1.0' >> $jupyter_pam_path
+echo 'auth    requisite pam_succeed_if.so uid >= 500 quiet' >> $jupyter_pam_path
+echo 'auth    required  pam_unix.so nodelay' >> $jupyter_pam_path
+echo 'account required  pam_unix.so' >> $jupyter_pam_path
 
 ### culler
 echo "import sys
