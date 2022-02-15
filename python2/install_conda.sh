@@ -31,6 +31,13 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     conda create -y --name $conda_env_name_python3 python=$python3_version
     conda config --set auto_activate_base false
     popd
+
+    ## 设置pip 为国内源
+    pip_conf_path=~/.pip
+    mkdir -p $pip_conf_path
+    rm -f $pip_conf_path/pip.conf
+    echo '[global]' >> $pip_conf_path/pip.conf
+    echo 'index-url = https://pypi.mirrors.ustc.edu.cn/simple/' >> $pip_conf_path/pip.conf
 else
     log_info "Conda has installed"
 fi
