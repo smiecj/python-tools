@@ -13,10 +13,11 @@ pushd $home_path
 conda_is_installed=$(get_conda_is_installed)
 if [ "$FALSE" == "$conda_is_installed" ]; then
     ## install conda
-    ### aarch 架构 需要先更新 glibc 才能成功安装 conda
+    ### centos7 aarch 架构 需要先更新 glibc 才能成功安装 conda
     system_arch=`uname -p`
-    if [ "aarch64" == "$system_arch" ]; then
-        sh ./upgrade_glibc.sh
+    centos_version=`cat /etc/redhat-release | sed 's/.*release //g' | sed 's/ .*//g'`
+    if [ "aarch64" == "$system_arch" ] && [[ $centos_version =~ 7.* ]]; then
+       sh ./upgrade_glibc.sh
     fi
 
     rm -rf $miniconda_install_path
