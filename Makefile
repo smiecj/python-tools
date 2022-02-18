@@ -10,6 +10,9 @@ install_jupyter:
 uninstall_jupyter:
 	sh jupyter/uninstall_jupyter.sh
 
+install_python3:
+	sh python3/install_python3.sh
+
 install_conda:
 	sh python2/install_conda.sh
 

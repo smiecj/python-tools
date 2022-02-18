@@ -3,8 +3,18 @@ FALSE="False"
 
 ## check conda is installed
 get_conda_is_installed() {
-    jq_exec_ret=`conda env list 2>/dev/null || true`
-    if [ -z "$jq_exec_ret" ]; then
+    conda_exec_ret=`conda env list 2>/dev/null || true`
+    if [ -z "$conda_exec_ret" ]; then
+        echo "$FALSE"
+        return
+    fi
+    echo "$TRUE"
+}
+
+## check python3 is installed
+get_python3_is_installed() {
+    python3_exec_ret=`python3 -V 2>/dev/null || true`
+    if [ -z "$python3_exec_ret" ]; then
         echo "$FALSE"
         return
     fi
@@ -27,8 +37,7 @@ get_npm_is_installed() {
 ### Use site-packages folder to judge jupyterhub is installed
 ### refer: https://github.com/conda/conda/issues/9599
 get_jupyter_is_installed() {
-    local conda_env_name=$1
-    local jupyterhub_package_num=`ls -l $miniconda_install_path/envs/$conda_env_name/lib/python$python3_version/site-packages | grep 'jupyterhub' | wc -l`
+    local jupyterhub_package_num=`ls -l $PYTHON3_LIB_HOME | grep 'jupyterhub' | wc -l`
     if [ $jupyterhub_package_num -eq 0 ]; then
         echo "$FALSE"
         return

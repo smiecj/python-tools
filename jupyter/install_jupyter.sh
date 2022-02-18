@@ -8,11 +8,12 @@ pushd $home_path
 
 . ../env.sh
 . ../log.sh
+source /etc/profile
 
-## check conda is installed
-conda_is_installed=$(get_conda_is_installed)
-if [ "$FALSE" == "$conda_is_installed" ]; then
-    log_warn "Conda is not installed! Please installed conda first"
+## check python3 is installed
+python3_is_installed=$(get_python3_is_installed)
+if [ "$FALSE" == "$python3_is_installed" ]; then
+    log_warn "python3 is not installed! Please installed python3 first"
     exit
 fi
 
@@ -24,7 +25,7 @@ if [ "$FALSE" == "$npm_is_installed" ]; then
 fi
 
 ## check jupyter is installed
-jupyter_is_installed=$(get_jupyter_is_installed "$conda_env_name_python3")
+jupyter_is_installed=$(get_jupyter_is_installed)
 if [ "$TRUE" == "$jupyter_is_installed" ]; then
     log_warn "Jupyter has installed!"
     exit
@@ -37,27 +38,39 @@ do
 done
 
 ## install jupyter
-source $miniconda_install_path/bin/activate $conda_env_name_python3
+pip_bin=$PYTHON3_HOME/bin/pip
+python_bin=$PYTHON3_HOME/bin/python
+for conpoment in ${yum_conpoment_arr[@]}
+do
+    yum -y install $conpoment
+done
+
+$pip_bin install --upgrade pip
+for conpoment in ${python3_conpoment_arr[@]}
+do
+    $pip_bin install $conpoment
+done
+
 for conpoment in ${jupyter_conpoment_arr[@]}
 do
     log_info "Install jupyter conpoment: install $conpoment begin"
-    pip uninstall -y $conpoment
+    #$pip_bin uninstall -y $conpoment
     if [ -n "$pip_proxy" ]; then
-        pip install $conpoment -i $pip_proxy
+        $pip_bin install $conpoment -i $pip_proxy
     else
-        pip install $conpoment
+        $pip_bin install $conpoment
     fi
     log_info "Install jupyter conpoment: install $conpoment finish"
 done
 
 ## install kernel
+### 当前: 全部替换成 python3
 for kernel in ${jupyter_kernel_arr[@]}
 do
     log_info "Install jupyter kernel: install $kernel begin"
-    python -m $kernel install
+    $python_bin -m $kernel install
     log_info "Install jupyter kernel: install $kernel finish"
 done
-conda deactivate
 
 ## config jupyter proxy
 proxy_token_lines=`cat /etc/profile | grep CONFIGPROXY_AUTH_TOKEN | wc -l`
@@ -69,9 +82,10 @@ fi
 mkdir -p $jupyter_home/config
 
 pushd $jupyter_home/config
-source $miniconda_install_path/bin/activate $conda_env_name_python3
+jupyterhub_bin=$PYTHON3_HOME/bin/jupyterhub
+jupyter_bin=$PYTHON3_HOME/bin/jupyter
 rm -f jupyterhub_config.py
-jupyterhub --generate-config
+$jupyterhub_bin --generate-config
 
 ### basic
 #### auth
@@ -120,16 +134,15 @@ c.ConfigurableHTTPProxy.api_url = '$jupyter_proxy_address'
 " >> jupyterhub_config.py
 
 ### install some useful extensions
-jupyter contrib nbextension install --sys-prefix
+$jupyter_bin contrib nbextension install --sys-prefix
 
 #### auto complete
-jupyter nbextension enable hinterland/hinterland --sys-prefix
+$jupyter_bin nbextension enable hinterland/hinterland --sys-prefix
 #### show execute time
-jupyter nbextension enable execute_time/ExecuteTime --sys-prefix
+$jupyter_bin nbextension enable execute_time/ExecuteTime --sys-prefix
 #### use numpy
-jupyter nbextension enable snippets/main --sys-prefix
+$jupyter_bin nbextension enable snippets/main --sys-prefix
 
-conda deactivate
 popd
 
 ## add at least two local account

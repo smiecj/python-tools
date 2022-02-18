@@ -7,5 +7,6 @@ pushd $home_path
 . ../env.sh
 . ../log.sh
 . ../common.sh
+source /etc/profile
 
-find $miniconda_install_path/envs/$conda_env_name_python3 -name 'jupyter*' | xargs rm -rf
+find $PYTHON3_LIB_HOME -name 'jupyter*' | xargs rm -rf

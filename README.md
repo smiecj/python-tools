@@ -11,6 +11,9 @@ install_conda: install conda
 ### make install_pip
 install pip for python2
 
+### make install_python3
+install python3 by yum
+
 ### make install_conda
 install miniconda, then we can manage our python environment more convinent
 

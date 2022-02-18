@@ -30,14 +30,23 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     wget --no-check-certificate -N -O $conda_install_script $conda_pkg_download_url
     bash $conda_install_script -b -p $miniconda_install_path
 
-    ## add conda to environment
-    echo -ne "\nexport $conda_env_key_home=$miniconda_install_path\nexport PATH=\$PATH:\$$conda_env_key_home/bin\n" >> /etc/profile
-    source /etc/profile
-
-    ## conda install env
-    conda create -y --name $conda_env_name_python3 python=$python3_version
-    conda config --set auto_activate_base false
+    ## conda install python3 env
+    $miniconda_install_path/bin/conda create -y --name $conda_env_name_python3 python=$python3_version
+    $miniconda_install_path/bin/conda config --set auto_activate_base false
     popd
+
+    ## add conda and python3 to environment
+    ### 注意 python 本身不要设置在环境变量中，否则可能会导致 yum 无法执行
+    python3_home_path=$miniconda_install_path/envs/$conda_env_name_python3
+    python3_lib_path=$miniconda_install_path/envs/$conda_env_name/lib/python$python3_version/site-packages
+    echo -e "\n# conda & python" >> /etc/profile
+    echo "export $conda_env_key_home=$miniconda_install_path" >> /etc/profile
+    echo "export $python3_env_key_home=$python3_home_path" >> /etc/profile
+    echo "export $python3_lib_key_home=$python3_lib_path" >> /etc/profile
+    echo "export PATH=\$PATH:\$$conda_env_key_home/bin" >> /etc/profile
+    ln -s $python3_home_path/bin/python3 /usr/bin/python3
+    ln -s $python3_home_path/bin/pip3 /usr/bin/pip3
+    source /etc/profile
 
     ## 设置pip 为国内源
     pip_conf_path=~/.pip
