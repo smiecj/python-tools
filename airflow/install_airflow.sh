@@ -16,6 +16,7 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
 fi
 
 ## check airflow is installed
+### todo: use absolute path as jupyter
 airflow_is_installed=$(get_airflow_is_installed "$conda_env_name_python3")
 if [ "$TRUE" == "$airflow_is_installed" ]; then
     log_warn "Airflow has installed!"
