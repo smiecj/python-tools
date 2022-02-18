@@ -38,8 +38,8 @@ do
 done
 
 ## install jupyter
-pip_bin=$PYTHON3_HOME/bin/pip
-python_bin=$PYTHON3_HOME/bin/python
+pip_bin=$PYTHON3_HOME/bin/pip3
+python_bin=$PYTHON3_HOME/bin/python3
 for conpoment in ${yum_conpoment_arr[@]}
 do
     yum -y install $conpoment
