@@ -88,8 +88,11 @@ rm -f jupyterhub_config.py
 $jupyterhub_bin --generate-config
 
 ### basic
+#### spawner
+sed -i 's/#c.Spawner.cmd/c.Spawner.cmd/g' jupyterhub_config.py
+
 #### auth
-sed -i "s/.*c\.JupyterHub\.ip.*/c.JupyterHub.ip = '$jupyterhub_conf_bind_ip'/g" jupyterhub_config.py
+sed -i "s/.*c\.JupyterHub\.ip.*/c.JupyterHub.ip = '$jupyterhub_conf_bind_ip'/g" c
 sed -i "s/.*c\.JupyterHub\.port.*/c.JupyterHub.port = $jupyterhub_conf_bind_port/g" jupyterhub_config.py
 echo -e "\nc.PAMAuthenticator.service = '$jupyter_pam_file'\n" >> jupyterhub_config.py
 jupyter_pam_path=/etc/pam.d/$jupyter_pam_file

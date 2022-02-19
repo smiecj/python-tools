@@ -32,7 +32,7 @@ python3_version=3.8
 # jupyter config
 yum_conpoment_arr=("python3-zmq" "python3-devel" "libffi" "libffi-devel")
 python3_conpoment_arr=("wheel" "setuptools_rust")
-jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "PyHive" "jupyterhub-idle-culler" "spylon-kernel" "jupyter_contrib_nbextensions" "jupyterthemes")
+jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "jupyterlab" "PyHive" "jupyterhub-idle-culler" "spylon-kernel" "jupyter_contrib_nbextensions" "jupyterthemes")
 jupyter_kernel_arr=("spylon_kernel")
 npm_conpoment_arr=("configurable-http-proxy")
 

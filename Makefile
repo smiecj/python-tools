@@ -4,8 +4,11 @@ update:
 install_pip:
 	sh python2/install_pip.sh 
 
-install_jupyter:
-	sh jupyter/install_jupyter.sh
+install_jupyterhub:
+	sh jupyter/install_jupyterhub.sh
+
+install_jupyterlab:
+	sh jupyter/install_jupyterlab.sh
 
 uninstall_jupyter:
 	sh jupyter/uninstall_jupyter.sh
