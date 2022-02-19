@@ -1,11 +1,11 @@
 #!/bin/bash
 #set -euxo pipefail
 
-. ./common.sh
-
 script_full_path=$(realpath $0)
 home_path=$(dirname $script_full_path)
 pushd $home_path
+
+. ../common.sh
 
 . ../env.sh
 . ../log.sh

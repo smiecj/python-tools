@@ -29,7 +29,14 @@ python3_lib_key_home="PYTHON3_LIB_HOME"
 conda_env_name_python3=py3
 python3_version=3.8
 
-# jupyter config
+# jupyter
+## jupyter service
+jupyter_service_file=/etc/systemd/system/jupyter.service
+jupyter_app_env_key=JUPYTERHUB_SINGLEUSER_APP
+jupyter_app_notebook=notebook.notebookapp.NotebookApp
+jupyter_app_lab=jupyter_server.serverapp.ServerApp
+
+## jupyter config
 yum_conpoment_arr=("python3-zmq" "python3-devel" "libffi" "libffi-devel")
 python3_conpoment_arr=("wheel" "setuptools_rust")
 jupyter_conpoment_arr=("jupyter" "notebook" "jupyterhub" "jupyterlab" "PyHive" "jupyterhub-idle-culler" "spylon-kernel" "jupyter_contrib_nbextensions" "jupyterthemes")

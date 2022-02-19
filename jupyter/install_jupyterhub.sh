@@ -1,10 +1,10 @@
 #!/bin/bash
 
-. ./common.sh
-
 script_full_path=$(realpath $0)
 home_path=$(dirname $script_full_path)
 pushd $home_path
+
+. ../common.sh
 
 . ../env.sh
 . ../log.sh
@@ -64,7 +64,6 @@ do
 done
 
 ## install kernel
-### 当前: 全部替换成 python3
 for kernel in ${jupyter_kernel_arr[@]}
 do
     log_info "Install jupyter kernel: install $kernel begin"
@@ -160,7 +159,8 @@ do
     chown -R ${juputer_local_username_arr[$i]}:${juputer_local_username_arr[$i]} $home_path
 done
 
-## copy jupyter systemd and start script
+## copy jupyter systemd and service start/stop script
+### start and stop script
 jupyter_script_path=$jupyter_home/scripts
 mkdir -p $jupyter_script_path
 cp start_jupyterhub.sh $jupyter_script_path
@@ -168,15 +168,17 @@ cp stop_jupyterhub.sh $jupyter_script_path
 cp ../env.sh $jupyter_script_path
 chmod -R 755 $jupyter_script_path
 
-jupyter_service_file=/etc/systemd/system/jupyter.service
+### systemd
 source /etc/profile
 cp jupyterhub_systemd.conf $jupyter_service_file
 format_path=`echo $PATH | sed 's/\//\\\\\//g'`
 sed -i "s/{PATH}/$format_path/g" $jupyter_service_file
+sed -i "s/{$jupyter_app_env_key}/$jupyter_app_notebook/g" $jupyter_service_file
 format_jupyter_home=`echo $jupyter_home | sed 's/\//\\\\\//g'`
 sed -i "s/{JUPUTER_HOME}/$format_jupyter_home/g" $jupyter_service_file
 chmod 755 $jupyter_service_file
 systemctl daemon-reload
+systemctl enable jupyter
 
 ## start jupyterhub
 ### start_jupyterhub.sh
