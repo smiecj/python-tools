@@ -46,9 +46,8 @@ get_jupyter_is_installed() {
 }
 
 get_airflow_is_installed() {
-    local conda_env_name=$1
-    local jupyterhub_package_num=`ls -l $miniconda_install_path/envs/$conda_env_name/lib/python$python3_version/site-packages | grep 'airflow' | wc -l`
-    if [ $jupyterhub_package_num -eq 0 ]; then
+    local airflow_package_num=`ls -l $PYTHON3_LIB_HOME | grep 'airflow' | wc -l`
+    if [ $airflow_package_num -eq 0 ]; then
         echo "$FALSE"
         return
     fi
