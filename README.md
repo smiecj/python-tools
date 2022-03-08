@@ -27,5 +27,8 @@ default use notebook
 ### make install_jupyterlab
 install jupyterlab and jupyterhub
 
+### make install_airflow
+install airflow
+
 ### clean
 clean all temp folder, including logs

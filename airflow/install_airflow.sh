@@ -39,9 +39,6 @@ pip3 install cpython
 pip3 install cython
 pip3 install numpy
 
-useradd airflow || true
-echo $airflow_username:$airflow_password | chpasswd
-
 ### install airflow
 pip3 install "apache-airflow==${airflow_version}" --constraint "${requirement_url}" -i https://pypi.tuna.tsinghua.edu.cn/simple
 
@@ -49,18 +46,27 @@ pip3 install "apache-airflow==${airflow_version}" --constraint "${requirement_ur
 airflow db init
 
 airflow users create \
-    --username admin \
-    --firstname Peter \
-    --lastname Parker \
-    --role Admin \
-    --email spiderman@superhero.org
+    --username $airflow_admin_username \
+    --password $airflow_admin_password \
+    --firstname $airflow_default_user_firstname \
+    --lastname $airflow_default_user_lastname \
+    --role $airflow_admin_role \
+    --email $airflow_default_user_email
 
 ### copy start and stop script
 airflow_script_bin_path=/usr/local/bin
-cp env_airflow.sh $airflow_script_bin_path
+cp -f env_airflow.sh $airflow_script_bin_path
 cp start_airflow.sh $airflow_script_bin_path/airflowstart
 chmod +x $airflow_script_bin_path/airflowstart
 cp stop_airflow.sh $airflow_script_bin_path/airflowstop
 chmod +x $airflow_script_bin_path/airflowstop
+
+#### auto start at reboot
+echo "@reboot $airflow_script_bin_path/airflowstart" >> /var/spool/cron/root
+
+### log
+mkdir -p $airflow_log_home
+add_logrorate_task $airflow_log_webserver webserver
+add_logrorate_task $airflow_log_scheduler scheduler
 
 popd

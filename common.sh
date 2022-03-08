@@ -45,6 +45,7 @@ get_jupyter_is_installed() {
     echo "$TRUE"
 }
 
+## check airflow is installed
 get_airflow_is_installed() {
     local airflow_package_num=`ls -l $PYTHON3_LIB_HOME | grep 'airflow' | wc -l`
     if [ $airflow_package_num -eq 0 ]; then
@@ -52,4 +53,19 @@ get_airflow_is_installed() {
         return
     fi
     echo "$TRUE"
+}
+
+## write logrotate file
+add_logrorate_task() {
+    local log_path=$1
+    local log_name=$2
+    local rotate_conf=/etc/logrotate.d/$log_name
+    echo "$log_path{" > $rotate_conf
+    echo "    copytruncate" >> $rotate_conf
+    echo "    daily" >> $rotate_conf
+    echo "    rotate 7" >> $rotate_conf
+    echo "    missingok" >> $rotate_conf
+    echo "    compress" >> $rotate_conf
+    echo "    size 200M" >> $rotate_conf
+    echo "}" >> $rotate_conf
 }
