@@ -16,10 +16,12 @@ pip_proxy=
 ## conda
 ### x86
 conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda2-latest-Linux-x86_64.sh
+conda_forge_download_url=https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-aarch64.sh
 system_arch=`uname -p`
 if [ "aarch64" == "$system_arch" ]; then
     ### arm
     conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-aarch64.sh
+    conda_forge_download_url=https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-x86_64.sh
 fi
 miniconda_install_path="/usr/local/miniconda"
 conda_env_key_home="CONDA_HOME"
@@ -61,3 +63,5 @@ jupyter_pam_file=jupyterhub_pam
 jupyter_spawner_timeout=3600
 jupyter_memory_limit=1G
 jupyter_cpu_limit=2
+
+jupyterhub_log=$jupyter_home/jupyterhub.log

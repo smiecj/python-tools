@@ -13,6 +13,7 @@ source /etc/profile
 sh ./install_jupyterhub.sh
 
 pushd $jupyter_home/config
+sed -i "s/# c.Spawner.cmd/c.Spawner.cmd/g" jupyterhub_config.py
 sed -i "s/c.Spawner.cmd = \['jupyterhub-singleuser'\]/c.Spawner.cmd = \['jupyter-labhub'\]/g" jupyterhub_config.py
 sed -i "s/$jupyter_app_env_key=.*\"/$jupyter_app_env_key=$jupyter_app_lab\"/g" $jupyter_service_file
 systemctl daemon-reload
@@ -26,7 +27,7 @@ jupyter labextension install @krassowski/jupyterlab-lsp
 $pip_bin install jupyterlab-lsp
 $pip_bin install jupyter-lsp
 $pip_bin install git+https://github.com/krassowski/python-language-server.git@main
-jupyter server extension enable --user --py jupyter_lsp
+$PYTHON3_HOME/bin/jupyter server extension enable --user --py jupyter_lsp
 
 ### continuousHinting 自动补全 需要手动打开
 ### Settings -> Advanced Settings Editor -> Code Completion -> set continuousHinting = true

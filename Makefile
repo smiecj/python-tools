@@ -17,7 +17,7 @@ install_python3:
 	sh python3/install_python3.sh
 
 install_conda:
-	sh python2/install_conda.sh
+	sh python2/install_conda.sh $(conda_type)
 
 test_conda_manager:
 	sh python2/conda_manager_helper.sh get

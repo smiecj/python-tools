@@ -14,8 +14,11 @@ install pip for python2
 ### make install_python3
 install python3 by yum
 
-### make install_conda
-install miniconda, then we can manage our python environment more convinent
+### make install_conda conda_type="conda/forge"
+install miniconda, then we can manage our python environment more convenient
+
+conda_type = conda: install conda (Anaconda version)
+conda_type = forge: install conda forge (open source)
 
 ### make test_conda_manager
 test conda manager(check and update)

@@ -1,6 +1,11 @@
 #!/bin/bash
 #set -euxo pipefail
 
+conda_type="conda"
+if [ $# -gt 0 ] && [ -n $1 ]; then
+    conda_type=$1
+fi
+
 script_full_path=$(realpath $0)
 home_path=$(dirname $script_full_path)
 pushd $home_path
@@ -9,6 +14,11 @@ pushd $home_path
 
 . ../env.sh
 . ../log.sh
+
+## forge: conda 的开源版本
+if [ "forge" == "$conda_type" ]; then
+    conda_pkg_download_url=$conda_forge_download_url
+fi
 
 conda_is_installed=$(get_conda_is_installed)
 if [ "$FALSE" == "$conda_is_installed" ]; then
@@ -27,7 +37,7 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     mkdir -p $pkg_download_path
     pushd $pkg_download_path
     conda_install_script=`echo "$conda_pkg_download_url" | sed 's/.*\///g'`
-    wget --no-check-certificate -N -O $conda_install_script $conda_pkg_download_url
+    curl -LO $conda_pkg_download_url
     bash $conda_install_script -b -p $miniconda_install_path
 
     ## conda install python3 env

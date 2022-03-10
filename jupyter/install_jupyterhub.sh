@@ -171,6 +171,8 @@ chmod -R 755 $jupyter_script_path
 ### systemd
 source /etc/profile
 cp jupyterhub_systemd.conf $jupyter_service_file
+#### PATH need add python3 bin path because spawner is run by command
+export PATH=$PATH:$PYTHON3_HOME/bin
 format_path=`echo $PATH | sed 's/\//\\\\\//g'`
 sed -i "s/{PATH}/$format_path/g" $jupyter_service_file
 sed -i "s/{$jupyter_app_env_key}/$jupyter_app_notebook/g" $jupyter_service_file
@@ -179,6 +181,9 @@ sed -i "s/{JUPUTER_HOME}/$format_jupyter_home/g" $jupyter_service_file
 chmod 755 $jupyter_service_file
 systemctl daemon-reload
 systemctl enable jupyter
+
+#### jupyterhub log
+add_logrorate_task $jupyterhub_log jupyterhub
 
 ## start jupyterhub
 ### start_jupyterhub.sh
