@@ -22,5 +22,6 @@ echo -e "\n# python" >> /etc/profile
 echo "export $python3_env_key_home=/usr/local" >> /etc/profile
 python3_lib_path=/usr/local/lib/`ls -l /usr/lib | grep python3 | sed 's/.* //g'`
 echo "export $python3_lib_key_home=$python3_lib_path/site-packages" >> /etc/profile
+echo "export PATH=\$PATH::/root/.local/bin" >> /etc/profile
 
 popd

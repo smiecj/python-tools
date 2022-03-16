@@ -19,6 +19,9 @@ install_python3:
 install_conda:
 	sh python2/install_conda.sh $(conda_type)
 
+install_pip2pi:
+	sh pip2pi/install_pip2pi.sh
+
 test_conda_manager:
 	sh python2/conda_manager_helper.sh get
 	sh python2/conda_manager_helper.sh check py3 tensorflow

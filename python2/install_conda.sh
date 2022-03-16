@@ -53,7 +53,11 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     echo "export $conda_env_key_home=$miniconda_install_path" >> /etc/profile
     echo "export $python3_env_key_home=$python3_home_path" >> /etc/profile
     echo "export $python3_lib_key_home=$python3_lib_path" >> /etc/profile
-    echo "export PATH=\$PATH:\$$conda_env_key_home/bin" >> /etc/profile
+    echo "export PATH=\$PATH:\$$python3_env_key_home/bin:\$$conda_env_key_home/bin" >> /etc/profile
+
+    ### python3 soft link
+    rm -f /usr/bin/python3*
+    rm -f /usr/bin/pip3*
     ln -s $python3_home_path/bin/python3 /usr/bin/python3
     ln -s $python3_home_path/bin/pip3 /usr/bin/pip3
     source /etc/profile

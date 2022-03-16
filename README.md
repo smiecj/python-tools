@@ -17,8 +17,11 @@ install python3 by yum
 ### make install_conda conda_type="conda/forge"
 install miniconda, then we can manage our python environment more convenient
 
-conda_type = conda: install conda (Anaconda version)
-conda_type = forge: install conda forge (open source)
+conda_type = conda: install [conda](https://docs.conda.io/en/latest/miniconda.html) (Anaconda version)
+conda_type = forge: install [conda forge](https://conda-forge.org) (open source)
+
+### make install_pip2pi
+install [pip2pi](https://github.com/wolever/pip2pi) for pip server (pip2pi + httpd)
 
 ### make test_conda_manager
 test conda manager(check and update)
