@@ -14,14 +14,17 @@ pkg_download_path="packages"
 pip_proxy=
 
 ## conda
+anaconda_version=4.11.0
+conda_forge_version=4.12.0-0
+
 ### x86
-conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda2-latest-Linux-x86_64.sh
-conda_forge_download_url=https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-x86_64.sh
+conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py38_$anaconda_version-Linux-x86_64.sh
+conda_forge_download_url=https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/Miniforge3-$conda_forge_version/Miniforge3-$conda_forge_version-Linux-x86_64.sh
 system_arch=`uname -p`
-if [ "aarch64" == "$system_arch" ]; then
+if [[ "aarch64" == "$system_arch" ]]; then
     ### arm
-    conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-aarch64.sh
-    conda_forge_download_url=https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-aarch64.sh
+    conda_pkg_download_url=https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py38_$anaconda_version-Linux-aarch64.sh
+    conda_forge_download_url=https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/Miniforge3-$conda_forge_version/Miniforge3-$conda_forge_version-Linux-aarch64.sh
 fi
 
 miniconda_install_path="/usr/local/miniconda"

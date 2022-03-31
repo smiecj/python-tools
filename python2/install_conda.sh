@@ -26,7 +26,7 @@ if [ "$FALSE" == "$conda_is_installed" ]; then
     ### centos7 aarch 架构 需要先更新 glibc 才能成功安装 conda
     system_arch=`uname -p`
     centos_version=`cat /etc/redhat-release | sed 's/.*release //g' | sed 's/ .*//g'`
-    if [ "aarch64" == "$system_arch" ] && [[ $centos_version =~ 7.* ]]; then
+    if [[ "aarch64" == "$system_arch" ]] && [[ $centos_version =~ 7.* ]]; then
        sh ./upgrade_glibc.sh
     fi
 
