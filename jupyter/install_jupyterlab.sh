@@ -29,6 +29,8 @@ $pip_bin install jupyter-lsp
 $pip_bin install git+https://github.com/krassowski/python-language-server.git@main
 $PYTHON3_HOME/bin/jupyter server extension enable --user --py jupyter_lsp
 
+## todo: 安装其他 jupyterlab 插件
+
 ### continuousHinting 自动补全 需要手动打开
 ### Settings -> Advanced Settings Editor -> Code Completion -> set continuousHinting = true
 
